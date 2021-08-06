@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { categories } from "./data.categories";
 import { GridDataResult, PageChangeEvent } from "@progress/kendo-angular-grid";
 import { SortDescriptor } from "@progress/kendo-data-query";
-import { ProductService } from "./product.service";
+import { ExperimentService } from "./experiment.service";
 import { Observable } from "rxjs";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less'],
-  providers: [ProductService]
+  providers: [ExperimentService]
 })
 
 export class AppComponent {
@@ -18,12 +18,12 @@ export class AppComponent {
   public defaultItem = { text: "Filter by Category", value: null };
 
   public gridItems: Observable<GridDataResult>;
-  public pageSize: number = 25;
+  public pageSize: number = 20;
   public skip: number = 0;
   public sortDescriptor: SortDescriptor[] = [];
-  public filterTerm: number = null;
+  public filterTerm: string = null;
 
-  constructor(private service: ProductService) {
+  constructor(private service: ExperimentService) {
     this.loadGridItems();
   }
 
@@ -33,7 +33,7 @@ export class AppComponent {
   }
 
   private loadGridItems(): void {
-    this.gridItems = this.service.getProducts(
+    this.gridItems = this.service.getSteps(
       this.skip,
       this.pageSize,
       this.sortDescriptor,
@@ -48,7 +48,7 @@ export class AppComponent {
 
   public handleFilterChange(item: {
     text: string;
-    value: number | null;
+    value: string;
   }): void {
     this.filterTerm = item.value;
     this.skip = 0;
