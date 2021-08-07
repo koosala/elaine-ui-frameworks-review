@@ -10,19 +10,18 @@ Filter on:  <kendo-dropdownlist [data]="dropDownItems" textField='text' valueFie
 <p>
   <kendo-grid [data]="gridItems | async" [pageSize]="pageSize" [skip]="skip" [pageable]="true"
     (pageChange)="pageChange($event)" [sortable]="true" [sort]="sortDescriptor" (sortChange)="handleSortChange($event)"
-    [height]="800">
+    [height]="800" (cellClick)="cellClickHandler($event)" (cancel)="cancelHandler($event)">
     <kendo-grid-column field="RowId" title="Row ID" [width]="50">
     </kendo-grid-column>
     <kendo-grid-column field="RowType" title="Row Type">
     </kendo-grid-column>
-    <kendo-grid-column field="LabeledpH" [style]="{'text-align': 'right'}" title="Labeled pH" format="{0:n2}">
+    <kendo-grid-column field="LabeledpH" [style]="{'text-align': 'right'}" title="Labeled pH" format="{0:n2}" editor="numeric">
     </kendo-grid-column>
     <kendo-grid-column field="CoATemp1" [style]="{'text-align': 'right'}" title="CoA Temp 1 (Low, C)" format="{0:n0}">
     </kendo-grid-column>
     <kendo-grid-column field="CoApH1" [style]="{'text-align': 'right'}" title="CoA pH 1" format="{0:n2}">
     </kendo-grid-column>
-    <kendo-grid-column field="CoATemp2" [style]="{'text-align': 'right'}" title="CoA Temp 2 (Middle, C)"
-      format="{0:n0}">
+    <kendo-grid-column field="CoATemp2" [style]="{'text-align': 'right'}" title="CoA Temp 2 (Middle, C)" format="{0:n0}">
     </kendo-grid-column>
     <kendo-grid-column field="CoApH2" [style]="{'text-align': 'right'}" title="CoA pH 2" format="{0:n2}">
     </kendo-grid-column>

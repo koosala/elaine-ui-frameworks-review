@@ -5,8 +5,10 @@ import {
   process,
   SortDescriptor
 } from "@progress/kendo-data-query";
-import { Observable, of } from "rxjs";
+import { from, Observable, of } from "rxjs";
 import { pHSteps } from "./data.experiment";
+
+let steps = pHSteps;
 
 @Injectable()
 export class ExperimentService {
@@ -18,7 +20,7 @@ export class ExperimentService {
   ): Observable<DataResult> {
     let data;
     if (filterTerm) {
-      data = process(orderBy(pHSteps, sortDescriptor), {
+      data = process(orderBy(steps, sortDescriptor), {
         filter: {
           logic: "and",
           filters: [
@@ -31,11 +33,17 @@ export class ExperimentService {
         }
       }).data;
     } else {
-      data = orderBy(pHSteps, sortDescriptor);
+      data = orderBy(steps, sortDescriptor);
     }
     return of({
       data: data.slice(skip, skip + pageSize),
       total: data.length
     });
+  }
+
+  public save(phStep, isNew: boolean) {
+    if (isNew) steps.concat(phStep);
+    var index = steps.findIndex(p => p.RowId == phStep.RowId);
+    steps[index] = phStep;
   }
 }
